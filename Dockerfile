@@ -1,7 +1,7 @@
 FROM python:3.12-slim-bookworm
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     portaudio19-dev \
     python3-dev \
     build-essential \
@@ -23,4 +23,7 @@ COPY . .
 
 # Install the local package
 RUN pip install whisperflow
+
+RUN useradd -m appuser
+USER appuser
 
