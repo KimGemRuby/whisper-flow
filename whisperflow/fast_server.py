@@ -33,11 +33,11 @@ def transcribe_pcm_chunk(
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     """webscoket implementation"""
-    model = ts.get_model()
+    model = ts.get_model("base")
     session = None
 
     async def transcribe_async(chunks: list):
-        return await ts.transcribe_pcm_chunks_async(model, chunks)
+        return await ts.transcribe_pcm_chunks_async(model, chunks, lang="fr")
 
     async def send_back_async(data: dict):
         await websocket.send_json(data)

@@ -13,14 +13,13 @@ from whisper import Whisper
 models = {}
 
 
-def get_model(file_name="tiny.en.pt") -> Whisper:
-    """load models from disk"""
-    if file_name not in models:
-        path = os.path.join(os.path.dirname(__file__), f"./models/{file_name}")
-        models[file_name] = whisper.load_model(path).to(
+def get_model(model_name="base") -> Whisper:
+    """load whisper model by name (tiny, base, small, medium, large, turbo)"""
+    if model_name not in models:
+        models[model_name] = whisper.load_model(model_name).to(
             "cuda" if torch.cuda.is_available() else "cpu"
         )
-    return models[file_name]
+    return models[model_name]
 
 
 def transcribe_pcm_chunks(
